@@ -17,7 +17,9 @@ namespace AgriEnergyConnect
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
             builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+     .AddRoles<IdentityRole>() 
+     .AddEntityFrameworkStores<ApplicationDbContext>();
+
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
@@ -45,6 +47,8 @@ namespace AgriEnergyConnect
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
             app.MapRazorPages();
+
+            DbSeeder.Seed(app);
 
             app.Run();
         }
