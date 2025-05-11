@@ -28,7 +28,7 @@ The system is built using ASP.NET Core MVC (.NET 8) with Entity Framework Core a
 
 ---
 
-## 🚀 How to Run the Prototype
+## How to Run the Prototype
 
 1. Run the application using **IIS Express (HTTPS)**.
 2. Navigate to `https://localhost:xxxx/` in your browser.
