@@ -1,53 +1,42 @@
 ﻿@model IEnumerable<AgriEnergyConnect.Models.Farmer>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Farmers";
 }
 
-<h1>Index</h1>
+<h1 class="mb-4 text-primary fw-bold">Manage Farmers</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h5 class="text-secondary">Total Farmers: @Model.Count()</h5>
+    <a asp-action="Create" class="btn btn-success">
+        ➕ Add New Farmer
+    </a>
+</div>
+
+<table class="table table-hover table-bordered shadow-sm rounded">
+    <thead class="table-primary text-dark">
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ContactNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FarmLocation)
-            </th>
-            <th></th>
+            <th>@Html.DisplayNameFor(model => model.First().Name)</th>
+            <th>@Html.DisplayNameFor(model => model.First().Email)</th>
+            <th>@Html.DisplayNameFor(model => model.First().ContactNumber)</th>
+            <th>@Html.DisplayNameFor(model => model.First().FarmLocation)</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ContactNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FarmLocation)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.FarmerId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.FarmerId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.FarmerId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="fw-medium">@item.Name</td>
+                <td>@item.Email</td>
+                <td>@item.ContactNumber</td>
+                <td>@item.FarmLocation</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.FarmerId" class="btn btn-sm btn-outline-warning me-1">✏️ Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.FarmerId" class="btn btn-sm btn-outline-info me-1">🔍 Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.FarmerId" class="btn btn-sm btn-outline-danger">🗑️ Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

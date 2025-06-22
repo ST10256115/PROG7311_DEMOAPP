@@ -5,38 +5,48 @@
 @inject UserManager<IdentityUser> UserManager
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Products";
 }
 
-<h1>Products</h1>
+<h1 class="mb-4 text-primary fw-bold">Product Listings</h1>
 
 @if (User.IsInRole("Employee"))
 {
-    <form method="get" class="row mb-3">
-        <div class="col-md-3">
-            <input type="text" name="category" value="@Context.Request.Query["category"]" class="form-control" placeholder="Filter by Category" />
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-light fw-semibold">
+            🔍 Filter Products
         </div>
-        <div class="col-md-3">
-            <input type="text" name="farmerName" value="@Context.Request.Query["farmerName"]" class="form-control" placeholder="Filter by Farmer Name" />
+        <div class="card-body">
+            <form method="get" class="row gy-2 gx-3">
+                <div class="col-md-3">
+                    <input type="text" name="category" value="@Context.Request.Query["category"]" class="form-control" placeholder="Category" />
+                </div>
+                <div class="col-md-3">
+                    <input type="text" name="farmerName" value="@Context.Request.Query["farmerName"]" class="form-control" placeholder="Farmer Name" />
+                </div>
+                <div class="col-md-2">
+                    <input type="date" name="fromDate" value="@Context.Request.Query["fromDate"]" class="form-control" />
+                </div>
+                <div class="col-md-2">
+                    <input type="date" name="toDate" value="@Context.Request.Query["toDate"]" class="form-control" />
+                </div>
+                <div class="col-md-2 d-grid">
+                    <button type="submit" class="btn btn-outline-primary">Apply Filters</button>
+                </div>
+            </form>
         </div>
-        <div class="col-md-2">
-            <input type="date" name="fromDate" value="@Context.Request.Query["fromDate"]" class="form-control" />
-        </div>
-        <div class="col-md-2">
-            <input type="date" name="toDate" value="@Context.Request.Query["toDate"]" class="form-control" />
-        </div>
-        <div class="col-md-2">
-            <button type="submit" class="btn btn-primary w-100">Filter</button>
-        </div>
-    </form>
+    </div>
 }
 
-<p>
-    <a asp-action="Create" class="btn btn-success">Create New</a>
-</p>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h5 class="text-secondary">Total Products: @Model.Count()</h5>
+    <a asp-action="Create" class="btn btn-success">
+        ➕ Create New Product
+    </a>
+</div>
 
-<table class="table table-bordered">
-    <thead class="table-light">
+<table class="table table-hover table-bordered shadow-sm rounded">
+    <thead class="table-primary text-dark">
         <tr>
             <th>@Html.DisplayNameFor(model => model.First().Name)</th>
             <th>@Html.DisplayNameFor(model => model.First().Category)</th>
@@ -49,14 +59,16 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                <td>@Html.DisplayFor(modelItem => item.Category)</td>
+                <td class="fw-medium">@Html.DisplayFor(modelItem => item.Name)</td>
+                <td>
+                    <span class="badge bg-secondary">@item.Category</span>
+                </td>
                 <td>@item.ProductionDate.ToString("yyyy-MM-dd")</td>
                 <td>@item.Farmer?.Name</td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.ProductId" class="btn btn-sm btn-outline-warning me-1">✏️ Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.ProductId" class="btn btn-sm btn-outline-info me-1">🔍 Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.ProductId" class="btn btn-sm btn-outline-danger">🗑️ Delete</a>
                 </td>
             </tr>
         }
